@@ -12,7 +12,7 @@ pipeline {
         stage('Clone Code') {
             steps {
                 git branch: 'main',
-                url: 'https://github.com/shivanisable13/rent_pag.git'
+                url: 'https://github.com/shivanisable13/book_pg.git'
             }
         }
 
