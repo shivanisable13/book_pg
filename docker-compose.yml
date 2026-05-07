@@ -3,7 +3,7 @@ version: '3.8'
 services:
   web:
     build: .
-    container_name: pg-web
+    container_name: pg-web1
     ports:
       - "80:80"
     depends_on:
@@ -11,10 +11,10 @@ services:
 
   db:
     image: mysql:5.7
-    container_name: pg-db
+    container_name: pg-db1
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: pg_rental
+      MYSQL_DATABASE: campus_stay
     ports:
       - "3306:3306"
