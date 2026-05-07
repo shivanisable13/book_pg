@@ -162,3 +162,22 @@ INSERT INTO amenities (name, icon_class) VALUES
 ('Gym', 'fa-dumbbell'),
 ('CCTV', 'fa-video'),
 ('Power Backup', 'fa-bolt');
+
+-- ================= ADMIN USER =================
+INSERT INTO users (
+    full_name,
+    email,
+    phone,
+    password,
+    role,
+    profile_image,
+    is_verified
+) VALUES (
+    'Admin User',
+    'admin@campusstay.com',
+    '9876543210',
+    'admin123',
+    'admin',
+    'default_user.png',
+    TRUE
+);
