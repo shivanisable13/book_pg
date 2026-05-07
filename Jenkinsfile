@@ -1,0 +1,66 @@
+pipeline {
+    agent any
+
+    environment {
+        IMAGE_NAME = "shivanisable/pg-booking"
+        APP_CONTAINER = "pg-app"
+        DB_CONTAINER = "pg-db"
+    }
+
+    stages {
+
+        stage('Clone Code') {
+            steps {
+                git branch: 'main',
+                url: 'https://github.com/shivanisable13/rent_pag.git'
+            }
+        }
+
+        stage('Cleanup Old App Container') {
+            steps {
+                sh '''
+                docker rm -f $APP_CONTAINER || true
+                '''
+            }
+        }
+
+        stage('Create Network') {
+            steps {
+                sh 'docker network create pg-network || true'
+            }
+        }
+
+        stage('Start MySQL Container') {
+            steps {
+                sh '''
+                docker start $DB_CONTAINER || docker run -d \
+                --name $DB_CONTAINER \
+                --network pg-network \
+                -v pgdata:/var/lib/mysql \
+                -e MYSQL_ROOT_PASSWORD=root \
+                -e MYSQL_DATABASE=pg_rental \
+                mysql:5.7
+                '''
+            }
+        }
+
+        stage('Build App Image') {
+            steps {
+                sh 'docker build -t $IMAGE_NAME .'
+            }
+        }
+
+        stage('Run App Container') {
+    steps {
+        sh '''
+        docker run -d \
+        --name $APP_CONTAINER \
+        --network pg-network \
+        -v pguploads:/var/www/html/uploads \
+        -p 80:80 \
+        $IMAGE_NAME
+        '''
+    }
+}
+    }
+}
