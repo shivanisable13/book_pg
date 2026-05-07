@@ -2,9 +2,9 @@ pipeline {
     agent any
 
     environment {
-        IMAGE_NAME = "shivanisable/pg-booking"
-        APP_CONTAINER = "pg-app"
-        DB_CONTAINER = "pg-db"
+        IMAGE_NAME = "shivanisable/pg-book"
+        APP_CONTAINER = "pg-app1"
+        DB_CONTAINER = "pg-db1"
     }
 
     stages {
